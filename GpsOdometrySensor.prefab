@@ -40,12 +40,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1169945808159697312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48480902c4fc01e4dae962794732670e, type: 3}
+  m_Script: {fileID: 11500000, guid: d8b81483189b9ce4e9add181c7b395a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Name: 
   Topic: 
   Frame: 
+  ParentTransform: {fileID: 0}
   Frequency: 12.5
   ChildFrame: 
   IgnoreMapOrigin: 0
