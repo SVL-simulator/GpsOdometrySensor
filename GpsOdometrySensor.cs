@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 LG Electronics, Inc.
+ * Copyright (c) 2018-2021 LG Electronics, Inc.
  *
  * This software contains code licensed as described in LICENSE.
  *
@@ -16,7 +16,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Simulator.Sensors.UI;
-using System.Collections;
 using Simulator.Analysis;
 
 namespace Simulator.Sensors
@@ -34,8 +33,7 @@ namespace Simulator.Sensors
         [SensorParameter]
         public bool IgnoreMapOrigin = false;
 
-        Queue<Tuple<double, Action>> MessageQueue =
-            new Queue<Tuple<double, Action>>();
+        Queue<Tuple<double, Action>> MessageQueue = new Queue<Tuple<double, Action>>();
 
         bool Destroyed = false;
         bool IsFirstFixedUpdate = true;
