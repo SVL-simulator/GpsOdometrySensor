@@ -1,7 +1,7 @@
 {
   "name": "GPS Odometry Sensor",
   "accessType": "public",
-  "description": "Example of a sensor to gather GPS Odometry Data.",
+  "description": "This sensor outputs the GPS location of the vehicle in Longitude/Latitude and Northing/Easting coordintates and the vehicle velocity.\nSee {{DOCS_HOST}}/docs/python-api/#gps-odometry for more details.",
   "licenseName": "LG Content",
   "copyright": "LG Electronics Inc.",
   "tags": [
