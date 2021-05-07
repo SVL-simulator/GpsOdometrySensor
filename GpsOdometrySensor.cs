@@ -45,7 +45,6 @@ namespace Simulator.Sensors
         BridgeInstance Bridge;
         Publisher<GpsOdometryData> Publish;
 
-        Rigidbody RigidBody;
         IVehicleDynamics Dynamics;
         MapOrigin MapOrigin;
         Vector3 startPosition;
@@ -54,7 +53,6 @@ namespace Simulator.Sensors
 
         private void Awake()
         {
-            RigidBody = GetComponentInParent<Rigidbody>();
             Dynamics = GetComponentInParent<IVehicleDynamics>();
             MapOrigin = MapOrigin.Find();
             startPosition = transform.position;
@@ -142,7 +140,7 @@ namespace Simulator.Sensors
             var orientation = transform.rotation;
             orientation.Set(-orientation.z, orientation.x, -orientation.y, orientation.w); // converting to right handed xyz
 
-            var angularVelocity = RigidBody.angularVelocity;
+            var angularVelocity = Dynamics.AngularVelocity;
             angularVelocity.Set(-angularVelocity.z, angularVelocity.x, -angularVelocity.y); // converting to right handed xyz
 
             var data = new GpsOdometryData()
@@ -160,8 +158,8 @@ namespace Simulator.Sensors
                 Northing = location.Northing,
                 Easting = location.Easting,
                 Orientation = orientation,
-                ForwardSpeed = Vector3.Dot(RigidBody.velocity, transform.forward),
-                Velocity = RigidBody.velocity,
+                ForwardSpeed = Vector3.Dot(Dynamics.Velocity, transform.forward),
+                Velocity = Dynamics.Velocity,
                 AngularVelocity = angularVelocity,
                 WheelAngle = Dynamics.WheelAngle,
             };
@@ -192,7 +190,7 @@ namespace Simulator.Sensors
             var orientation = transform.rotation;
             orientation.Set(-orientation.z, orientation.x, -orientation.y, orientation.w); // converting to right handed xyz
 
-            var angularVelocity = RigidBody.angularVelocity;
+            var angularVelocity = Dynamics.AngularVelocity;
             angularVelocity.Set(-angularVelocity.z, angularVelocity.x, -angularVelocity.y); // converting to right handed xyz
 
             var graphData = new Dictionary<string, object>()
@@ -205,8 +203,8 @@ namespace Simulator.Sensors
                 {"Northing", location.Northing},
                 {"Easting", location.Easting},
                 {"Orientation", orientation},
-                {"Forward Speed", Vector3.Dot(RigidBody.velocity, transform.forward)},
-                {"Velocity", RigidBody.velocity},
+                {"Forward Speed", Vector3.Dot(Dynamics.Velocity, transform.forward)},
+                {"Velocity", Dynamics.Velocity},
                 {"Angular Velocity", angularVelocity}
             };
             visualizer.UpdateGraphValues(graphData);
