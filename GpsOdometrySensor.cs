@@ -33,21 +33,21 @@ namespace Simulator.Sensors
         [SensorParameter]
         public bool IgnoreMapOrigin = false;
 
-        Queue<Tuple<double, Action>> MessageQueue = new Queue<Tuple<double, Action>>();
+        private Queue<Tuple<double, Action>> MessageQueue = new Queue<Tuple<double, Action>>();
 
-        bool Destroyed = false;
-        bool IsFirstFixedUpdate = true;
-        double LastTimestamp;
+        private bool Destroyed = false;
+        private bool IsFirstFixedUpdate = true;
+        private double LastTimestamp;
 
-        float NextSend;
-        uint SendSequence;
+        private float NextSend;
+        private uint SendSequence;
 
-        BridgeInstance Bridge;
-        Publisher<GpsOdometryData> Publish;
+        private BridgeInstance Bridge;
+        private Publisher<GpsOdometryData> Publish;
 
-        IVehicleDynamics Dynamics;
-        MapOrigin MapOrigin;
-        Vector3 startPosition;
+        private IVehicleDynamics Dynamics;
+        private MapOrigin MapOrigin;
+        private Vector3 startPosition;
 
         public override SensorDistributionType DistributionType => SensorDistributionType.MainOrClient;
         public override float PerformanceLoad { get; } = 0.05f;
@@ -142,7 +142,7 @@ namespace Simulator.Sensors
                 return;
             }
 
-            var location = MapOrigin.GetGpsLocation(transform.position, IgnoreMapOrigin);
+            var location = MapOrigin.PositionToGpsLocation(transform.position, IgnoreMapOrigin);
 
             var orientation = transform.rotation;
             orientation.Set(-orientation.z, orientation.x, -orientation.y, orientation.w); // converting to right handed xyz
@@ -192,7 +192,7 @@ namespace Simulator.Sensors
         {
             UnityEngine.Debug.Assert(visualizer != null);
 
-            var location = MapOrigin.GetGpsLocation(transform.position, IgnoreMapOrigin);
+            var location = MapOrigin.PositionToGpsLocation(transform.position, IgnoreMapOrigin);
 
             var orientation = transform.rotation;
             orientation.Set(-orientation.z, orientation.x, -orientation.y, orientation.w); // converting to right handed xyz
@@ -224,8 +224,8 @@ namespace Simulator.Sensors
 
         public override void SetAnalysisData()
         {
-            var startLocation = MapOrigin.GetGpsLocation(startPosition, IgnoreMapOrigin);
-            var location = MapOrigin.GetGpsLocation(transform.position, IgnoreMapOrigin);
+            var startLocation = MapOrigin.PositionToGpsLocation(startPosition, IgnoreMapOrigin);
+            var location = MapOrigin.PositionToGpsLocation(transform.position, IgnoreMapOrigin);
 
             SensorAnalysisData = new List<AnalysisReportItem>
             {
